@@ -336,7 +336,33 @@ var swiper1 = new Swiper(".before-after-slider", {
     }
 });
 
+var swiper2 = new Swiper(".examples-slider", {
+    observer: true,
+    observeParents: true,
+    observeSlideChildren: true,
+    slidesPerView: 2,
+    spaceBetween: 30,
+    watchSlidesProgress: true,
 
+    navigation: {
+        nextEl: ".service-examples-section .swiper-button-next",
+        prevEl: ".service-examples-section .swiper-button-prev",
+    },
+    breakpoints: {
+        300: {
+            slidesPerView: 1,
+            spaceBetween: 16,
+        },
+        601: {
+            slidesPerView: 1.5,
+            spaceBetween: 24,
+        },
+        1024: {
+            slidesPerView: 2,
+            spaceBetween: 24,
+        },
+    }
+});
 
 class CustomVideoPlayer {
     constructor(container) {
@@ -510,29 +536,41 @@ class TabsManager {
         const sliderWrapper = panel.querySelector('.swiper-wrapper');
         if (!sliderWrapper || sliderWrapper.children.length === 0) return;
 
+        // Конфигурация для видео слайдера
         const swiperConfig = {
             slidesPerView: 1,
-            spaceBetween: 20,
+            spaceBetween: 16,
             navigation: {
                 nextEl: panel.querySelector('.swiper-button-next'),
                 prevEl: panel.querySelector('.swiper-button-prev'),
             },
             breakpoints: {
-                768: {
+                480: {
+                    slidesPerView: 1,
+                    spaceBetween: 16,
+                },
+                640: {
                     slidesPerView: 2,
+                    spaceBetween: 16,
+                },
+                768: {
+                    slidesPerView: 2.9,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 3.5,
+                    spaceBetween: 20,
+                },
+                1200: {
+                    slidesPerView: 4,
+                    spaceBetween: 24,
+                },
+                1440: {
+                    slidesPerView: 4,
+                    spaceBetween: 30,
                 }
             }
         };
-
-        if (tabId === 1) {
-            swiperConfig.breakpoints[1024] = {
-                slidesPerView: 4
-            };
-        } else if (tabId === 2) {
-            swiperConfig.breakpoints[1024] = {
-                slidesPerView: 3
-            };
-        }
 
         const swiper = new Swiper(panel.querySelector('.slider-wrapper'), swiperConfig);
         this.swipers.set(tabId, swiper);
@@ -697,4 +735,52 @@ class BlogSlider {
 
 document.addEventListener('DOMContentLoaded', () => {
     new CatalogSlider('.blog-slider');
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const statItems = document.querySelectorAll('.block-stats-js .stat-item .item-title');
+
+    function animateNumber(element, target, suffix, duration) {
+        let start = null;
+        let startValue = 0;
+
+        function step(timestamp) {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            const current = Math.floor(progress * target);
+
+            element.textContent = current + suffix;
+
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                element.textContent = target + suffix;
+            }
+        }
+
+        requestAnimationFrame(step);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                const text = element.textContent.trim();
+                const match = text.match(/^([\d.]+)(.*)$/);
+
+                if (match && !element.hasAttribute('data-animated')) {
+                    const target = parseFloat(match[1]);
+                    const suffix = match[2];
+                    const duration = parseInt(element.dataset.duration) || 2000;
+
+                    animateNumber(element, target, suffix, duration);
+                    element.setAttribute('data-animated', 'true');
+                    observer.unobserve(element);
+                }
+            }
+        });
+    }, {threshold: 0.5});
+
+    statItems.forEach(item => observer.observe(item));
 });
