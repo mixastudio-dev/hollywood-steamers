@@ -364,6 +364,34 @@ var swiper2 = new Swiper(".examples-slider", {
     }
 });
 
+var swiper3 = new Swiper(".related-posts-slider", {
+    observer: true,
+    observeParents: true,
+    observeSlideChildren: true,
+    slidesPerView: 2,
+    spaceBetween: 30,
+    watchSlidesProgress: true,
+
+    navigation: {
+        nextEl: ".related-posts-section .swiper-button-next",
+        prevEl: ".related-posts-section .swiper-button-prev",
+    },
+    breakpoints: {
+        300: {
+            slidesPerView: 1,
+            spaceBetween: 16,
+        },
+        601: {
+            slidesPerView: 2,
+            spaceBetween: 24,
+        },
+        1024: {
+            slidesPerView: 3,
+            spaceBetween: 24,
+        },
+    }
+});
+
 class CustomVideoPlayer {
     constructor(container) {
         this.container = container;
@@ -783,4 +811,175 @@ document.addEventListener('DOMContentLoaded', function () {
     }, {threshold: 0.5});
 
     statItems.forEach(item => observer.observe(item));
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Используем optional chaining для безопасного доступа
+    document.querySelector('.step-item:first-child .step-checkpoint')?.classList.add('active');
+
+    function updateProgressBars() {
+        const stepItems = document.querySelectorAll('.step-item');
+        if (!stepItems.length) return;
+
+        const windowHeight = window.innerHeight;
+        const scrollTop = window.pageYOffset;
+        const activationPoint = 0.5;
+        const activationLine = scrollTop + (windowHeight * activationPoint);
+
+        stepItems.forEach(function(item) {
+            const checkpoint = item.querySelector('.step-checkpoint');
+            const fill = item.querySelector('.step-line-fill');
+            if (!checkpoint || !fill) return;
+
+            const elementTop = item.offsetTop;
+            const elementHeight = item.offsetHeight;
+            const elementBottom = elementTop + elementHeight;
+
+            let progress = 0;
+
+            if (elementBottom < activationLine) {
+                progress = 100;
+            } else if (elementTop > activationLine) {
+                progress = 0;
+            } else {
+                const pixelsAboveLine = activationLine - elementTop;
+                progress = (pixelsAboveLine / elementHeight) * 100;
+                progress = Math.max(0, Math.min(100, progress));
+            }
+
+            fill.style.height = progress + '%';
+
+            const lastItem = stepItems[stepItems.length - 1];
+            const lastCheckpoint = lastItem.querySelector('.step-checkpoint');
+
+            if (item === lastItem && lastCheckpoint) {
+                if (elementTop <= activationLine) {
+                    checkpoint.classList.add('active');
+                } else {
+                    checkpoint.classList.remove('active');
+                }
+            } else {
+                if (elementTop <= activationLine && elementBottom >= activationLine) {
+                    checkpoint.classList.add('active');
+                } else {
+                    checkpoint.classList.remove('active');
+                }
+            }
+        });
+
+        document.querySelector('.step-item:first-child .step-checkpoint')?.classList.add('active');
+    }
+
+    if (document.querySelectorAll('.step-item').length) {
+        window.addEventListener('scroll', updateProgressBars);
+        updateProgressBars();
+    }
+});
+
+class CustomSelect {
+    constructor(container) {
+        this.container = container;
+        this.header = container.querySelector('.filter-item-header');
+        this.dropdown = container.querySelector('.filter-item-dropdown');
+        this.options = container.querySelectorAll('.filter-item-option');
+        this.isOpen = false;
+
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.setInitialValue();
+    }
+
+    bindEvents() {
+        this.header.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggle();
+        });
+
+        this.options.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.selectOption(option);
+                this.close();
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!this.container.contains(e.target)) {
+                this.close();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isOpen) {
+                this.close();
+            }
+        });
+    }
+
+    toggle() {
+        this.isOpen ? this.close() : this.open();
+    }
+
+    open() {
+        this.container.classList.add('active');
+        this.isOpen = true;
+    }
+
+    close() {
+        this.container.classList.remove('active');
+        this.isOpen = false;
+    }
+
+    selectOption(option) {
+        const selectedText = option.textContent;
+        this.header.textContent = selectedText;
+
+        const event = new CustomEvent('select-change', {
+            detail: { value: selectedText, element: option }
+        });
+        this.container.dispatchEvent(event);
+    }
+
+    setInitialValue() {
+        const currentHeaderText = this.header.textContent.trim();
+
+        if (currentHeaderText) {
+            let matchingOption = null;
+            for (let option of this.options) {
+                if (option.textContent.trim() === currentHeaderText) {
+                    matchingOption = option;
+                    break;
+                }
+            }
+
+            if (matchingOption) {
+                this.selectOption(matchingOption);
+            } else {
+                const event = new CustomEvent('select-change', {
+                    detail: { value: currentHeaderText, element: null }
+                });
+                this.container.dispatchEvent(event);
+            }
+        } else {
+            const firstOption = this.options[0];
+            if (firstOption) {
+                this.selectOption(firstOption);
+            }
+        }
+    }
+
+    getValue() {
+        return this.header.textContent;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const filterItems = document.querySelectorAll('.filter-item');
+
+    filterItems.forEach(item => {
+        new CustomSelect(item);
+    });
 });

@@ -64,6 +64,185 @@
 
 
 
+<section class="default-banner contacts-banner" style="background-image: url(./img/contacts-banner-back.webp)">
+  <div class="container">
+    <div class="banner-content">
+      <div class="breadcrumbs-wrapper">
+        <nav class="yoast-breadcrumbs">
+          <span>
+            <span>
+              <a href="#">Home</a>
+            </span> /
+            <span class="breadcrumb_last" aria-current="page">Contact</span>
+          </span>
+        </nav>
+      </div>
+      <div class="banner-row">
+        <div class="banner-column">
+          <h1>
+            <strong>Get in touch</strong>
+            <strong>with us</strong>
+          </h1>
+          <div class="contacts-items">
+            <p>Phone: <a href="tel:+1 (323) 220-3102">+1 (323) 220-3102</a></p>
+            <p>Email: <a href="mailto:hollywoodsteamers@gmail.com">hollywoodsteamers@gmail.com</a></p>
+            <p>Address:<span> 605 S Verdugo Rd, Glendale, CA 91205</span></p>
+          </div>
+        </div>
+        <div class="banner-column">
+          <div class="form-banner">
+            <div class="wpcf7 js" id="wpcf7-f35-o1" lang="ru-RU" dir="ltr" data-wpcf7-id="35">
+              <div class="screen-reader-response"><p role="status" aria-live="polite" aria-atomic="true"></p> <ul></ul></div>
+              <form action="/dev/#wpcf7-f35-o1" method="post" class="wpcf7-form init" aria-label="Контактная форма" novalidate="novalidate" data-status="init">
+                <fieldset class="hidden-fields-container"><input type="hidden" name="_wpcf7" value="35"><input type="hidden" name="_wpcf7_version" value="6.1.2"><input type="hidden" name="_wpcf7_locale" value="ru_RU"><input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f35-o1"><input type="hidden" name="_wpcf7_container_post" value="0"><input type="hidden" name="_wpcf7_posted_data_hash" value="">
+                </fieldset>
+                <p><label> Full Name<br>
+                  <span class="wpcf7-form-control-wrap" data-name="text-848"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-text" autocomplete="name" aria-invalid="false" placeholder="Enter your full name" value="" type="text" name="text-848"></span><br>
+                </label><br>
+                  <label> Phone Number<br>
+                    <span class="wpcf7-form-control-wrap" data-name="tel-583"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-tel wpcf7-text wpcf7-validates-as-tel" aria-invalid="false" placeholder="Your phone number" value="" type="tel" name="tel-583"></span><br>
+                  </label><br>
+                  <label> Email Address<br>
+                    <span class="wpcf7-form-control-wrap" data-name="email-804"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-email wpcf7-text wpcf7-validates-as-email" aria-invalid="false" placeholder="Enter your email" value="" type="email" name="email-804"></span><br>
+                  </label><br>
+                  <label> Message<br>
+                    <span class="wpcf7-form-control-wrap" data-name="textarea-721"><textarea cols="40" rows="10" maxlength="2000" class="wpcf7-form-control wpcf7-textarea" aria-invalid="false" placeholder="Tell us more about your request..." name="textarea-721"></textarea></span><br>
+                  </label><br>
+                  <input class="wpcf7-form-control wpcf7-submit has-spinner" type="submit" value="Send message"><span class="wpcf7-spinner"></span>
+                </p><div class="wpcf7-response-output" aria-hidden="true"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="marque-section">
+  <div class="marquee-wrapper">
+    <div class="marquee">
+      <div class="marquee-group">
+        <div class="marque-item">
+          <img src="./img/marque-img1.webp" alt="">
+          <span>To Laguna Beach</span>
+        </div>
+        <div class="marque-item">
+          <img src="./img/marque-img2.webp" alt="">
+          <span>From Santa Monica</span>
+        </div>
+      </div>
+      <div class="marquee-group">
+        <div class="marque-item">
+          <img src="./img/marque-img1.webp" alt="">
+          <span>To Laguna Beach</span>
+        </div>
+        <div class="marque-item">
+          <img src="./img/marque-img2.webp" alt="">
+          <span>From Santa Monica</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="custom-map-section">
+  <div class="container">
+    <h2>Where we work</h2>
+    <div class="description-head">
+      <p>Our services cover all major areas of Los Angeles — from Santa Monica to Laguna Beach.</p>
+    </div>
+    <div class="map-wrapper">
+      <div class="maps-wrapper">
+        <img src="./img/map-location-santa-monica.webp" alt="">
+        <img src="./img/map-location-unset.webp" alt="">
+        <img src="./img/map-location-los-angeles.webp" alt="">
+        <img src="./img/map-location-long-beach.webp" alt="">
+        <img src="./img/map-location-laguna-beach.webp" alt="">
+      </div>
+      <div class="map-locations-nav">
+        <div class="title">Service areas</div>
+        <div class="map-tabs-nav">
+          <button type="button" class="tab-button">Santa Monica</button>
+          <button type="button" class="tab-button">Santa Clarita</button>
+          <button type="button" class="tab-button">Los Angeles</button>
+          <button type="button" class="tab-button">Long Beach</button>
+          <button type="button" class="tab-button">Laguna Beach</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const mapWrapper = document.querySelector('.map-wrapper');
+
+    if (!mapWrapper) return;
+
+    const imagesWrapper = mapWrapper.querySelector('.maps-wrapper');
+    const tabButtons = mapWrapper.querySelectorAll('.tab-button');
+    const images = imagesWrapper ? imagesWrapper.querySelectorAll('img') : [];
+
+    if (!images.length || !tabButtons.length) return;
+
+    images.forEach((img, index) => {
+      img.style.transition = 'opacity 0.3s ease';
+      img.style.position = 'absolute';
+      img.style.top = '0';
+      img.style.left = '0';
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+
+      if (index === 0) {
+        img.style.opacity = '1';
+        img.style.zIndex = '1';
+      } else {
+        img.style.opacity = '0';
+        img.style.zIndex = '0';
+      }
+    });
+
+    if (imagesWrapper) {
+      imagesWrapper.style.position = 'relative';
+      imagesWrapper.style.height = 'inherit';
+    }
+
+    function activateTab(index) {
+      tabButtons.forEach((button, i) => {
+        if (i === index) {
+          button.classList.add('active');
+        } else {
+          button.classList.remove('active');
+        }
+      });
+
+      images.forEach((img, i) => {
+        if (i === index) {
+          img.style.zIndex = '2';
+          img.style.opacity = '1';
+        } else {
+          img.style.opacity = '0';
+          setTimeout(() => {
+            if (img.style.opacity === '0') {
+              img.style.zIndex = '1';
+            }
+          }, 300);
+        }
+      });
+    }
+
+    tabButtons.forEach((button, index) => {
+      button.addEventListener('click', function() {
+        activateTab(index);
+      });
+    });
+
+    activateTab(0);
+  });
+</script>
+
 
 <!--footer.html-->
 </main>
