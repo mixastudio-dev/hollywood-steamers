@@ -1053,3 +1053,87 @@ document.addEventListener('DOMContentLoaded', function() {
         new CustomSelect(item);
     });
 });
+
+(function() {
+    if (window.CustomSelectInitialized) return;
+    window.CustomSelectInitialized = true;
+
+    class CustomSelect {
+        constructor(selectElement) {
+            this.select = selectElement;
+            this.init();
+        }
+
+        init() {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'custom-select-wrapper';
+
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'custom-select-button';
+            button.textContent = this.getSelectedText();
+
+            const dropdown = document.createElement('div');
+            dropdown.className = 'custom-select-dropdown';
+
+            const options = this.select.querySelectorAll('option');
+            options.forEach(option => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'custom-select-option';
+                optionEl.textContent = option.textContent;
+                optionEl.dataset.value = option.value;
+
+                if (option.selected) {
+                    optionEl.classList.add('selected');
+                }
+
+                optionEl.addEventListener('click', () => {
+                    this.select.value = optionEl.dataset.value;
+                    button.textContent = optionEl.textContent;
+
+                    dropdown.querySelectorAll('.custom-select-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    optionEl.classList.add('selected');
+
+                    const event = new Event('change', { bubbles: true });
+                    this.select.dispatchEvent(event);
+
+                    dropdown.classList.remove('open');
+                    button.classList.remove('open');
+                });
+
+                dropdown.appendChild(optionEl);
+            });
+
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle('open');
+                button.classList.toggle('open');
+            });
+
+            document.addEventListener('click', () => {
+                dropdown.classList.remove('open');
+                button.classList.remove('open');
+            });
+
+            wrapper.appendChild(button);
+            wrapper.appendChild(dropdown);
+
+            this.select.style.display = 'none';
+            this.select.parentNode.insertBefore(wrapper, this.select.nextSibling);
+        }
+
+        getSelectedText() {
+            const selectedOption = this.select.querySelector('option:checked');
+            return selectedOption ? selectedOption.textContent : '';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const selects = document.querySelectorAll('.wpcf7-select');
+        selects.forEach(select => {
+            new CustomSelect(select);
+        });
+    });
+})();

@@ -75,7 +75,7 @@
         <p>Eco-friendly, professional & reliable – couches, carpets & more.</p>
       </div>
       <div class="banner-bottom">
-        <a href="#" class="btn btn-primary">Get a free quote</a>
+        <a href="#" class="btn btn-primary open-modal-dialog" data-src="modal-form">Get a free quote</a>
         <div class="banner-socials">
           <a target="_blank" href="#">Instagram</a>
           <a target="_blank" href="#">Facebook</a>
@@ -737,11 +737,42 @@
     </div>
 </footer>
 
-<div class="modal-dialog modal-thanks" style="display: none;">
+<div class="modal-dialog modal-form" style="display: none;">
   <div class="modal-content">
     <div class="modal-body">
       <div class="modal-title"></div>
       <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-form-wrapper">
+        <div class="form-title">Request a Free Quote</div>
+        <div class="wpcf7 js" id="wpcf7-f35-o1" lang="ru-RU" dir="ltr" data-wpcf7-id="35">
+          <div class="screen-reader-response"><p role="status" aria-live="polite" aria-atomic="true"></p> <ul></ul></div>
+          <form action="/dev/#wpcf7-f35-o1" method="post" class="wpcf7-form init" aria-label="Контактная форма" novalidate="novalidate" data-status="init">
+            <fieldset class="hidden-fields-container"><input type="hidden" name="_wpcf7" value="35"><input type="hidden" name="_wpcf7_version" value="6.1.2"><input type="hidden" name="_wpcf7_locale" value="ru_RU"><input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f35-o1"><input type="hidden" name="_wpcf7_container_post" value="0"><input type="hidden" name="_wpcf7_posted_data_hash" value="">
+            </fieldset>
+            <p><label> Full Name<br>
+              <span class="wpcf7-form-control-wrap" data-name="text-848"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-text" autocomplete="name" aria-invalid="false" placeholder="Enter your full name" value="" type="text" name="text-848"></span><br>
+            </label><br>
+              <label> Phone Number<br>
+                <span class="wpcf7-form-control-wrap" data-name="tel-583"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-tel wpcf7-text wpcf7-validates-as-tel" aria-invalid="false" placeholder="Your phone number" value="" type="tel" name="tel-583"></span><br>
+              </label><br>
+              <label> Email Address<br>
+                <span class="wpcf7-form-control-wrap" data-name="email-804"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-email wpcf7-text wpcf7-validates-as-email" aria-invalid="false" placeholder="Enter your email" value="" type="email" name="email-804"></span><br>
+              </label><br>
+              <label>Service Type<br>
+                <span class="wpcf7-form-control-wrap" data-name="select-595"><select class="wpcf7-form-control wpcf7-select" aria-invalid="false" name="select-595"><option value="Sofa">Sofa</option><option value="Armchair &amp; Chair">Armchair &amp; Chair</option><option value="Mattress">Mattress</option><option value="Bed frame &amp; Headboard">Bed frame &amp; Headboard</option></select></span><br>
+              </label><br>
+              <label> Message<br>
+                <span class="wpcf7-form-control-wrap" data-name="textarea-721"><textarea cols="40" rows="10" maxlength="2000" class="wpcf7-form-control wpcf7-textarea" aria-invalid="false" placeholder="Tell us more about your request..." name="textarea-721"></textarea></span><br>
+              </label>
+            </p>
+            <div class="buttons-wrapper">
+              <p><input class="wpcf7-form-control wpcf7-submit has-spinner" type="submit" value="Send message"><span class="wpcf7-spinner"></span><br>
+                <a href="#">Book now</a>
+              </p>
+            </div><div class="wpcf7-response-output" aria-hidden="true"></div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>
