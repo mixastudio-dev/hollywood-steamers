@@ -524,6 +524,7 @@ class TabsManager {
         this.tabPanels = this.container.querySelectorAll('.tab-panel');
         this.isAnimating = false;
         this.swipers = new Map();
+        this.videoPlayers = new Map();
 
         this.init();
     }
@@ -538,6 +539,7 @@ class TabsManager {
             const firstTabId = this.tabPanels[0].dataset.tabId;
             if (firstTabId) {
                 this.initSwiper(parseInt(firstTabId));
+                this.initVideoPlayers(parseInt(firstTabId));
             }
         }
 
@@ -555,22 +557,88 @@ class TabsManager {
         });
     }
 
+    initVideoPlayers(tabId) {
+        if (tabId !== 1) return;
+        if (this.videoPlayers.has(tabId)) return;
+
+        const panel = this.container.querySelector(`.tab-panel[data-tab-id="${tabId}"]`);
+        if (!panel) return;
+
+        const videos = panel.querySelectorAll('video');
+        const playButtons = panel.querySelectorAll('.btn-play');
+
+        if (videos.length === 0) return;
+
+        videos.forEach((video, index) => {
+            const playButton = playButtons[index];
+            if (!playButton) return;
+
+            const newPlayButton = playButton.cloneNode(true);
+            playButton.parentNode.replaceChild(newPlayButton, playButton);
+
+            newPlayButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+
+                videos.forEach(v => {
+                    if (v !== video && !v.paused) {
+                        v.pause();
+                        const vPlayBtn = v.closest('.card-video')?.querySelector('.btn-play');
+                        if (vPlayBtn) vPlayBtn.style.opacity = '1';
+                    }
+                });
+
+                if (video.paused) {
+                    video.play();
+                    newPlayButton.style.opacity = '0';
+                } else {
+                    video.pause();
+                    newPlayButton.style.opacity = '1';
+                }
+            });
+
+            video.addEventListener('pause', () => {
+                newPlayButton.style.opacity = '1';
+            });
+
+            video.addEventListener('play', () => {
+                newPlayButton.style.opacity = '0';
+            });
+
+            video.addEventListener('ended', () => {
+                newPlayButton.style.opacity = '1';
+            });
+        });
+
+        this.videoPlayers.set(tabId, true);
+    }
+
+    stopAllVideos() {
+        const allVideos = this.container.querySelectorAll('video');
+        allVideos.forEach(video => {
+            video.pause();
+            const playBtn = video.closest('.card-video')?.querySelector('.btn-play');
+            if (playBtn) playBtn.style.opacity = '1';
+        });
+    }
+
     initSwiper(tabId) {
         if (this.swipers.has(tabId)) return;
 
         const panel = this.container.querySelector(`.tab-panel[data-tab-id="${tabId}"]`);
         if (!panel) return;
 
-        const sliderWrapper = panel.querySelector('.swiper-wrapper');
-        if (!sliderWrapper || sliderWrapper.children.length === 0) return;
+        const sliderWrapper = panel.querySelector('.slider-wrapper');
+        if (!sliderWrapper) return;
 
-        // Конфигурация для видео слайдера
+        const swiperElement = panel.querySelector('.testimonials-slider-videos');
+        if (!swiperElement) return;
+
         const swiperConfig = {
             slidesPerView: 1,
             spaceBetween: 16,
             navigation: {
-                nextEl: panel.querySelector('.swiper-button-next'),
-                prevEl: panel.querySelector('.swiper-button-prev'),
+                nextEl: swiperElement.querySelector('.swiper-button-next'),
+                prevEl: swiperElement.querySelector('.swiper-button-prev'),
             },
             breakpoints: {
                 480: {
@@ -600,7 +668,7 @@ class TabsManager {
             }
         };
 
-        const swiper = new Swiper(panel.querySelector('.slider-wrapper'), swiperConfig);
+        const swiper = new Swiper(swiperElement, swiperConfig);
         this.swipers.set(tabId, swiper);
     }
 
@@ -613,6 +681,8 @@ class TabsManager {
 
         this.isAnimating = true;
 
+        this.stopAllVideos();
+
         this.tabButtons.forEach(btn => btn.classList.remove('active'));
         this.tabPanels.forEach(panel => panel.classList.remove('active'));
 
@@ -620,6 +690,7 @@ class TabsManager {
         targetPanel.classList.add('active');
 
         this.initSwiper(targetTabId);
+        this.initVideoPlayers(targetTabId);
 
         setTimeout(() => {
             const swiper = this.swipers.get(targetTabId);
@@ -634,7 +705,6 @@ class TabsManager {
 document.addEventListener('DOMContentLoaded', () => {
     new TabsManager('.testimonials');
 });
-
 
 class CatalogSlider {
     constructor(containerSelector) {
