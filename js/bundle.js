@@ -1137,3 +1137,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 })();
+
+const track = document.getElementById("tickerTrack");
+
+track.innerHTML += track.innerHTML;
+
+let position = 0;
+let speed = 1;
+
+function animate() {
+    position -= speed;
+
+    if (Math.abs(position) >= track.scrollWidth / 2) {
+        position = 0;
+    }
+
+    track.style.transform = `translateX(${position}px)`;
+    requestAnimationFrame(animate);
+}
+
+animate();
