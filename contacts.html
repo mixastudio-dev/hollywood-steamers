@@ -25,13 +25,17 @@
 <header class="header">
   <div class="container">
       <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-md-6 col-m-6">
           <a href="#" class="logo">
             <img src="./img/logo.svg" alt="">
           </a>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8 col-md-0">
           <nav class="header-nav">
+            <a href="#" class="logo logo-small-screens">
+              <img src="./img/logo.svg" alt="">
+            </a>
+            <div class="close-menu-button"></div>
             <ul class="main-menu">
               <li>
                 <a href="#">About</a>
@@ -49,11 +53,20 @@
                 <a href="#">Blog</a>
               </li>
             </ul>
+            <div class="small-screens-widget">
+              <!-- Elfsight Google Reviews | Untitled Google Reviews 2 -->
+              <script src="https://elfsightcdn.com/platform.js" async></script>
+              <div class="elfsight-app-1a1eec1e-c8a5-4b6b-98a1-6ab14484f13c" data-elfsight-app-lazy></div>
+            </div>
           </nav>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-md-6 col-m-6">
           <a href="#" class="btn btn-blur">Book now</a>
-          <div class="mobile-menu-button"></div>
+          <div class="mobile-menu-button">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
         </div>
       </div>
   </div>
@@ -64,7 +77,11 @@
 
 
 
-<section class="default-banner contacts-banner" style="background-image: url(./img/contacts-banner-back.webp)">
+<section class="default-banner contacts-banner">
+  <div class="banner-back">
+    <img src="./img/contacts-banner-back.webp" alt="" class="back-pc">
+    <img src="./img/contacts-banner-back-mobile.webp" alt="" class="back-mobile">
+  </div>
   <div class="container">
     <div class="banner-content">
       <div class="breadcrumbs-wrapper">
@@ -87,6 +104,9 @@
             <p>Phone: <a href="tel:+1 (323) 220-3102">+1 (323) 220-3102</a></p>
             <p>Email: <a href="mailto:hollywoodsteamers@gmail.com">hollywoodsteamers@gmail.com</a></p>
             <p>Address:<span> 605 S Verdugo Rd, Glendale, CA 91205</span></p>
+          </div>
+          <div class="small-screens-button">
+            <a href="#" class="btn btn-blur">Book now</a>
           </div>
         </div>
         <div class="banner-column">
@@ -146,6 +166,35 @@
 
 
 
+<section class="small-screens-form-section">
+  <div class="container">
+    <h2>Request a Free Quote</h2>
+    <div class="form-wrapper">
+      <div class="wpcf7 js" id="wpcf7-f35-o12" lang="ru-RU" dir="ltr" data-wpcf7-id="35">
+        <div class="screen-reader-response"><p role="status" aria-live="polite" aria-atomic="true"></p> <ul></ul></div>
+        <form action="/dev/#wpcf7-f35-o1" method="post" class="wpcf7-form init" aria-label="Контактная форма" novalidate="novalidate" data-status="init">
+          <fieldset class="hidden-fields-container"><input type="hidden" name="_wpcf7" value="35"><input type="hidden" name="_wpcf7_version" value="6.1.2"><input type="hidden" name="_wpcf7_locale" value="ru_RU"><input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f35-o1"><input type="hidden" name="_wpcf7_container_post" value="0"><input type="hidden" name="_wpcf7_posted_data_hash" value="">
+          </fieldset>
+          <p><label> Full Name<br>
+            <span class="wpcf7-form-control-wrap" data-name="text-848"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-text" autocomplete="name" aria-invalid="false" placeholder="Enter your full name" value="" type="text" name="text-848"></span><br>
+          </label><br>
+            <label> Phone Number<br>
+              <span class="wpcf7-form-control-wrap" data-name="tel-583"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-tel wpcf7-text wpcf7-validates-as-tel" aria-invalid="false" placeholder="Your phone number" value="" type="tel" name="tel-583"></span><br>
+            </label><br>
+            <label> Email Address<br>
+              <span class="wpcf7-form-control-wrap" data-name="email-804"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-email wpcf7-text wpcf7-validates-as-email" aria-invalid="false" placeholder="Enter your email" value="" type="email" name="email-804"></span><br>
+            </label><br>
+            <label> Message<br>
+              <span class="wpcf7-form-control-wrap" data-name="textarea-721"><textarea cols="40" rows="10" maxlength="2000" class="wpcf7-form-control wpcf7-textarea" aria-invalid="false" placeholder="Tell us more about your request..." name="textarea-721"></textarea></span><br>
+            </label><br>
+            <input class="wpcf7-form-control wpcf7-submit has-spinner" type="submit" value="Send message"><span class="wpcf7-spinner"></span>
+          </p><div class="wpcf7-response-output" aria-hidden="true"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="custom-map-section">
   <div class="container">
     <h2>Where we work</h2>
@@ -177,7 +226,6 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const mapWrapper = document.querySelector('.map-wrapper');
-
     if (!mapWrapper) return;
 
     const imagesWrapper = mapWrapper.querySelector('.maps-wrapper');
@@ -186,14 +234,31 @@
 
     if (!images.length || !tabButtons.length) return;
 
+    function checkMobileLayout() {
+      const isMobileLayout = window.innerWidth <= 1024;
+
+      if (isMobileLayout) {
+        const mapLocationsNav = mapWrapper.querySelector('.map-locations-nav');
+        const container = document.querySelector('.custom-map-section .container');
+
+        if (mapLocationsNav && container && !mapLocationsNav.hasAttribute('data-moved')) {
+          container.insertBefore(mapLocationsNav, mapWrapper);
+          mapLocationsNav.setAttribute('data-moved', 'true');
+        }
+      } else {
+        const mapLocationsNav = document.querySelector('.map-locations-nav');
+        const container = document.querySelector('.custom-map-section .container');
+
+        if (mapLocationsNav && container && mapLocationsNav.hasAttribute('data-moved')) {
+          mapWrapper.insertBefore(mapLocationsNav, mapWrapper.firstChild);
+          mapLocationsNav.removeAttribute('data-moved');
+          mapLocationsNav.style.position = '';
+          mapLocationsNav.style.marginBottom = '';
+        }
+      }
+    }
+
     images.forEach((img, index) => {
-      img.style.transition = 'opacity 0.3s ease';
-      img.style.position = 'absolute';
-      img.style.top = '0';
-      img.style.left = '0';
-      img.style.width = '100%';
-      img.style.height = '100%';
-      img.style.objectFit = 'cover';
 
       if (index === 0) {
         img.style.opacity = '1';
@@ -206,7 +271,6 @@
 
     if (imagesWrapper) {
       imagesWrapper.style.position = 'relative';
-      imagesWrapper.style.height = 'inherit';
     }
 
     function activateTab(index) {
@@ -239,7 +303,12 @@
       });
     });
 
+    checkMobileLayout();
     activateTab(0);
+
+    window.addEventListener('resize', function() {
+      checkMobileLayout();
+    });
   });
 </script>
 
@@ -250,12 +319,12 @@
 <footer class="footer">
     <div class="container">
       <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-12 col-m-12">
           <div class="logo">
             <img src="./img/logo.svg" alt="">
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-12 col-m-12">
           <nav class="footer-nav">
             <ul class="footer-menu">
               <li>
@@ -276,7 +345,7 @@
             </ul>
           </nav>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-12 col-m-12">
           <div class="footer-socials">
             <a href="#" class="social-link">Instagram</a>
             <a href="#" class="social-link">Facebook</a>
@@ -284,12 +353,12 @@
         </div>
       </div>
       <div class="row row-bottom">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-12 col-m-12">
           <div class="footer-copy">
-            <p>© 2025 by Hollywood Steamers </p>
+            <p>© 2025 by <strong>Hollywood Steamers</strong> </p>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-12 col-m-12">
           <div class="footer-links">
             <a href="#" class="copy-link">Privacy Policy</a>
           </div>
@@ -327,7 +396,7 @@
               </label>
             </p>
             <div class="buttons-wrapper">
-              <p><input class="wpcf7-form-control wpcf7-submit has-spinner" type="submit" value="Send message"><span class="wpcf7-spinner"></span><br>
+              <p><input class="wpcf7-form-control wpcf7-submit has-spinner" type="submit" value="Send"><span class="wpcf7-spinner"></span><br>
                 <a href="#">Book now</a>
               </p>
             </div><div class="wpcf7-response-output" aria-hidden="true"></div>

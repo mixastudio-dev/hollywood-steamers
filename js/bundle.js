@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuButton = document.querySelector('.mobile-menu-button');
     const headerNav = document.querySelector('.header-nav');
+    const closeMenuButton = document.querySelector('.close-menu-button');
 
     function isMobileView() {
         return window.innerWidth <= 1024;
@@ -190,6 +191,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     mobileMenuButton.addEventListener('click', toggleMenu);
+
+    if (closeMenuButton) {
+        closeMenuButton.addEventListener('click', function() {
+            if (isMobileView() && headerNav.classList.contains('show')) {
+                closeMenu();
+            }
+        });
+    }
 
     const menuLinks = document.querySelectorAll('.main-menu a');
     menuLinks.forEach(link => {
@@ -274,6 +283,14 @@ document.addEventListener('DOMContentLoaded', function() {
     sliders.forEach(slider => {
         let animationFrame;
 
+        slider.addEventListener('touchstart', function(e) {
+            this.style.touchAction = 'pan-y pinch-zoom';
+        }, { passive: true });
+
+        slider.addEventListener('touchmove', function(e) {
+            this.style.touchAction = 'pan-y pinch-zoom';
+        }, { passive: true });
+
         slider.addEventListener('mouseleave', function() {
             const startValue = parseFloat(this.value) || 50;
             const startTime = performance.now();
@@ -326,7 +343,7 @@ var swiper1 = new Swiper(".before-after-slider", {
             spaceBetween: 16,
         },
         601: {
-            slidesPerView: 1.5,
+            slidesPerView: 1,
             spaceBetween: 24,
         },
         1024: {
@@ -375,6 +392,9 @@ var swiper3 = new Swiper(".related-posts-slider", {
     navigation: {
         nextEl: ".related-posts-section .swiper-button-next",
         prevEl: ".related-posts-section .swiper-button-prev",
+    },
+    pagination: {
+        el: ".related-posts-section .swiper-pagination",
     },
     breakpoints: {
         300: {
@@ -633,6 +653,8 @@ class TabsManager {
         const swiperElement = panel.querySelector('.testimonials-slider-videos');
         if (!swiperElement) return;
 
+        const swiperPagination = panel.querySelector('.swiper-pagination');
+
         const swiperConfig = {
             slidesPerView: 1,
             spaceBetween: 16,
@@ -640,18 +662,17 @@ class TabsManager {
                 nextEl: swiperElement.querySelector('.swiper-button-next'),
                 prevEl: swiperElement.querySelector('.swiper-button-prev'),
             },
+            pagination: {
+                el: swiperPagination,
+            },
             breakpoints: {
-                480: {
+                0: {
                     slidesPerView: 1,
                     spaceBetween: 16,
                 },
-                640: {
+                600: {
                     slidesPerView: 2,
                     spaceBetween: 16,
-                },
-                768: {
-                    slidesPerView: 2.9,
-                    spaceBetween: 20,
                 },
                 1024: {
                     slidesPerView: 3.5,
@@ -664,8 +685,8 @@ class TabsManager {
                 1440: {
                     slidesPerView: 4,
                     spaceBetween: 30,
-                }
-            }
+                },
+            },
         };
 
         const swiper = new Swiper(swiperElement, swiperConfig);
@@ -740,10 +761,13 @@ class CatalogSlider {
                 clickable: true,
             },
             breakpoints: {
-                640: {
+                0: {
+                    slidesPerView: 1,
+                },
+                601: {
                     slidesPerView: 2,
                 },
-                768: {
+                1025: {
                     slidesPerView: 3,
                 }
             }
@@ -805,10 +829,13 @@ class BlogSlider {
                 clickable: true,
             },
             breakpoints: {
-                640: {
+                0: {
+                    slidesPerView: 1,
+                },
+                601: {
                     slidesPerView: 2,
                 },
-                768: {
+                1025: {
                     slidesPerView: 3,
                 }
             }
@@ -884,8 +911,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Используем optional chaining для безопасного доступа
-    document.querySelector('.step-item:first-child .step-checkpoint')?.classList.add('active');
+    const firstCheckpoint = document.querySelector('.step-item:first-child .step-checkpoint');
+    if (firstCheckpoint) {
+        firstCheckpoint.classList.add('active');
+    }
 
     function updateProgressBars() {
         const stepItems = document.querySelectorAll('.step-item');
@@ -896,13 +925,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const activationPoint = 0.5;
         const activationLine = scrollTop + (windowHeight * activationPoint);
 
-        stepItems.forEach(function(item) {
+        stepItems.forEach(function(item, index) {
             const checkpoint = item.querySelector('.step-checkpoint');
             const fill = item.querySelector('.step-line-fill');
             if (!checkpoint || !fill) return;
 
-            const elementTop = item.offsetTop;
-            const elementHeight = item.offsetHeight;
+            const rect = item.getBoundingClientRect();
+            const elementTop = rect.top + scrollTop;
+            const elementHeight = rect.height;
             const elementBottom = elementTop + elementHeight;
 
             let progress = 0;
@@ -920,9 +950,8 @@ document.addEventListener('DOMContentLoaded', function() {
             fill.style.height = progress + '%';
 
             const lastItem = stepItems[stepItems.length - 1];
-            const lastCheckpoint = lastItem.querySelector('.step-checkpoint');
 
-            if (item === lastItem && lastCheckpoint) {
+            if (index === stepItems.length - 1) {
                 if (elementTop <= activationLine) {
                     checkpoint.classList.add('active');
                 } else {
@@ -936,12 +965,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-
-        document.querySelector('.step-item:first-child .step-checkpoint')?.classList.add('active');
     }
 
     if (document.querySelectorAll('.step-item').length) {
         window.addEventListener('scroll', updateProgressBars);
+        window.addEventListener('resize', updateProgressBars);
         updateProgressBars();
     }
 });
@@ -1140,20 +1168,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const track = document.getElementById("tickerTrack");
 
-track.innerHTML += track.innerHTML;
+if (track) {
+    track.innerHTML += track.innerHTML;
 
-let position = 0;
-let speed = 1;
+    let position = 0;
+    let speed = 1;
 
-function animate() {
-    position -= speed;
+    function animate() {
+        position -= speed;
 
-    if (Math.abs(position) >= track.scrollWidth / 2) {
-        position = 0;
+        if (Math.abs(position) >= track.scrollWidth / 2) {
+            position = 0;
+        }
+
+        track.style.transform = `translateX(${position}px)`;
+        requestAnimationFrame(animate);
     }
 
-    track.style.transform = `translateX(${position}px)`;
-    requestAnimationFrame(animate);
+    animate();
 }
-
-animate();

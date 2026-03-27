@@ -25,13 +25,17 @@
 <header class="header">
   <div class="container">
       <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-md-6 col-m-6">
           <a href="#" class="logo">
             <img src="./img/logo.svg" alt="">
           </a>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8 col-md-0">
           <nav class="header-nav">
+            <a href="#" class="logo logo-small-screens">
+              <img src="./img/logo.svg" alt="">
+            </a>
+            <div class="close-menu-button"></div>
             <ul class="main-menu">
               <li>
                 <a href="#">About</a>
@@ -49,11 +53,20 @@
                 <a href="#">Blog</a>
               </li>
             </ul>
+            <div class="small-screens-widget">
+              <!-- Elfsight Google Reviews | Untitled Google Reviews 2 -->
+              <script src="https://elfsightcdn.com/platform.js" async></script>
+              <div class="elfsight-app-1a1eec1e-c8a5-4b6b-98a1-6ab14484f13c" data-elfsight-app-lazy></div>
+            </div>
           </nav>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-md-6 col-m-6">
           <a href="#" class="btn btn-blur">Book now</a>
-          <div class="mobile-menu-button"></div>
+          <div class="mobile-menu-button">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
         </div>
       </div>
   </div>
@@ -64,7 +77,11 @@
 
 
 
-<section class="default-banner single-blog-banner" style="background-image: url(./img/single-blog-banner-back.webp)">
+<section class="default-banner single-blog-banner">
+  <div class="banner-back">
+    <img src="./img/single-blog-banner-back.webp" alt="" class="back-pc">
+    <img src="./img/single-blog-banner-back-mobile.webp" alt="" class="back-mobile">
+  </div>
   <div class="container">
     <div class="banner-content">
       <div class="breadcrumbs-wrapper">
@@ -85,6 +102,9 @@
         <div class="description">
           <p>Expert advice, practical tips, and our table navigator for you to make the right decision</p>
         </div>
+        <div class="small-screens-button">
+          <a href="#" class="btn btn-primary">Book now</a>
+        </div>
       </div>
     </div>
   </div>
@@ -99,7 +119,7 @@
           <p>Health. Aesthetics. Cozy. The three words to describe what your clean furniture makes your home look and feel like. The eternal question our customers face sounds like this: Is it better to clean my furniture myself or call for service? We will help you solve it.</p>
         </div>
         <div class="content-item">
-          <h2>Why Furniture Cleaning Matters At All</h2>
+          <h2>Why Furniture Cleaning <br class="br-mobile"> Matters At All</h2>
           <p>The problem is not only in visible dirt, dust, and pet hair. Allergens, body oils, and even bacteria — all you cannot see — still happily live on and in the fabrics. Regular cleaning helps:</p>
           <ul>
             <li>Reduce significantly allergens and odors</li>
@@ -114,7 +134,7 @@
         </div>
         <div class="content-item">
           <h2>Practical Tips for Cleaning Yourself</h2>
-          <p>DIY has some advantages. It is painless for your budget and schedule, and can even be rather satisfying. With available household supplies, you can handle small cleaning jobs without much fuss. You do not have to pay for expert visits or extract a time slot from your schedule. You can choose your preferred cleaning agents and methods. Moreover, hands-on care helps you better understand your furniture materials. Your experience becomes richer, your expertise in furniture cleaning — vaster. If that is what you want, see below the tips from Hollywood Steamers. We also urge you to read the DIY Risks section.</p>
+          <p>DIY has some advantages. It is painless for your budget and schedule, and can even be rather satisfying. With available household supplies, you can handle small cleaning jobs without much fuss. You do not have to pay for expert visits or extract a time slot from your schedule. You can choose your preferred cleaning agents and methods. Moreover, hands-on care helps you better understand your furniture materials. Your experience becomes richer, your expertise in furniture cleaning — vaster. If that is what you want, see below the tips from <span>Hollywood Steamers</span>. We also urge you to read the DIY Risks section.</p>
         </div>
         <div class="content-item">
           <h2>Common DIY Agents and Accessories</h2>
@@ -159,43 +179,45 @@
         <div class="content-item">
           <h2>Table Navigator for Your Right Decision on Furniture Cleaning</h2>
           <p>If your furniture needs a quick refresh, DIY is perfectly fine. But when it comes to a thorough cleaning, a dedicated service like HOLLYWOOD STEAMERS will ensure durable and credential results. Here is the comparing table for your convenience. </p>
-          <table>
-            <tr>
-              <th>Situation</th>
-              <th>DIY</th>
-              <th>Professional</th>
-            </tr>
-            <tr>
-              <td>Light surface dirt & dust</td>
-              <td>Good</td>
-              <td>—</td>
-            </tr>
-            <tr>
-              <td>Stubborn stains and odors</td>
-              <td>So-so</td>
-              <td>Highly effective</td>
-            </tr>
-            <tr>
-              <td>Delicate or expensive furniture</td>
-              <td>Risk of damage</td>
-              <td>Safe and expert handling</td>
-            </tr>
-            <tr>
-              <td>Busy schedule </td>
-              <td>Time-consuming</td>
-              <td>Time-saving</td>
-            </tr>
-            <tr>
-              <td>Limited budget</td>
-              <td>Free</td>
-              <td>Affordable with us</td>
-            </tr>
-            <tr>
-              <td>Health/allergy concerns</td>
-              <td>Might not work</td>
-              <td>Deep allergen removal</td>
-            </tr>
-          </table>
+          <div class="table-wrapper">
+            <table>
+              <tr>
+                <th>Situation</th>
+                <th>DIY</th>
+                <th>Professional</th>
+              </tr>
+              <tr>
+                <td>Light surface dirt & dust</td>
+                <td>Good</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>Stubborn stains and odors</td>
+                <td>So-so</td>
+                <td>Highly effective</td>
+              </tr>
+              <tr>
+                <td>Delicate or expensive furniture</td>
+                <td>Risk of damage</td>
+                <td>Safe and expert handling</td>
+              </tr>
+              <tr>
+                <td>Busy schedule </td>
+                <td>Time-consuming</td>
+                <td>Time-saving</td>
+              </tr>
+              <tr>
+                <td>Limited budget</td>
+                <td>Free</td>
+                <td>Affordable with us</td>
+              </tr>
+              <tr>
+                <td>Health/allergy concerns</td>
+                <td>Might not work</td>
+                <td>Deep allergen removal</td>
+              </tr>
+            </table>
+          </div>
         </div>
         <div class="content-item content-item-promo">
           <h2>What You’ve Learned</h2>
@@ -312,6 +334,7 @@
           </a>
         </article>
       </div>
+      <div class="swiper-pagination"></div>
     </div>
   </div>
 </section>
@@ -323,12 +346,12 @@
 <footer class="footer">
     <div class="container">
       <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-12 col-m-12">
           <div class="logo">
             <img src="./img/logo.svg" alt="">
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-12 col-m-12">
           <nav class="footer-nav">
             <ul class="footer-menu">
               <li>
@@ -349,7 +372,7 @@
             </ul>
           </nav>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-12 col-m-12">
           <div class="footer-socials">
             <a href="#" class="social-link">Instagram</a>
             <a href="#" class="social-link">Facebook</a>
@@ -357,12 +380,12 @@
         </div>
       </div>
       <div class="row row-bottom">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-12 col-m-12">
           <div class="footer-copy">
-            <p>© 2025 by Hollywood Steamers </p>
+            <p>© 2025 by <strong>Hollywood Steamers</strong> </p>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-12 col-m-12">
           <div class="footer-links">
             <a href="#" class="copy-link">Privacy Policy</a>
           </div>
@@ -400,7 +423,7 @@
               </label>
             </p>
             <div class="buttons-wrapper">
-              <p><input class="wpcf7-form-control wpcf7-submit has-spinner" type="submit" value="Send message"><span class="wpcf7-spinner"></span><br>
+              <p><input class="wpcf7-form-control wpcf7-submit has-spinner" type="submit" value="Send"><span class="wpcf7-spinner"></span><br>
                 <a href="#">Book now</a>
               </p>
             </div><div class="wpcf7-response-output" aria-hidden="true"></div>
