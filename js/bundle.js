@@ -1188,3 +1188,75 @@ if (track) {
 
     animate();
 }
+
+
+const button = document.querySelector('.button-mobile-top');
+let timeout;
+
+const toggleButton = () => {
+    if (window.innerWidth > 600) return;
+
+    if (window.scrollY > 100) {
+        button.classList.add('show');
+    } else {
+        button.classList.remove('show');
+    }
+};
+
+const handleScroll = () => {
+    if (timeout) cancelAnimationFrame(timeout);
+    timeout = requestAnimationFrame(toggleButton);
+};
+
+const scrollToTop = (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+window.addEventListener('scroll', handleScroll);
+window.addEventListener('resize', toggleButton);
+button.addEventListener('click', scrollToTop);
+toggleButton();
+
+const container = document.querySelector('.table-wrapper');
+
+if (container) {
+    const indicator = document.createElement('div');
+    indicator.className = 'custom-scrollbar-indicator';
+    indicator.innerHTML = '<div class="scrollbar-thumb"></div>';
+    container.parentNode.insertBefore(indicator, container.nextSibling);
+
+    const thumb = indicator.querySelector('.scrollbar-thumb');
+    let hideTimeout;
+    let hasReached50 = false;
+
+    const updateScrollbar = () => {
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        const scrollPercent = container.scrollLeft / maxScroll;
+        const thumbWidth = scrollPercent * 100;
+        thumb.style.width = `${thumbWidth}%`;
+
+        if (scrollPercent >= 0.5 && !hasReached50) {
+            hasReached50 = true;
+            indicator.classList.add('visible');
+        }
+    };
+
+    const showIndicator = () => {
+        if (hasReached50) {
+            indicator.classList.add('visible');
+            clearTimeout(hideTimeout);
+            hideTimeout = setTimeout(() => {
+                indicator.classList.remove('visible');
+            }, 1500);
+        }
+    };
+
+    container.addEventListener('scroll', () => {
+        updateScrollbar();
+        showIndicator();
+    });
+
+    container.addEventListener('touchstart', showIndicator);
+    updateScrollbar();
+}
